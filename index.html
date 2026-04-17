@@ -17,7 +17,7 @@
   <option value="B店">B店</option>
 </select><br><br>
 
-<button onclick="send()">登録</button>
+<button onclick="alert('押された')">登録</button>
 
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
@@ -53,16 +53,18 @@ function send() {
     name: document.getElementById("name").value,
     storeId: document.getElementById("storeId").value
   };
-
+  alert("データ作成OK");
   fetch("https://script.google.com/macros/s/AKfycbxFHIiLNfymoWbEK9tSf8kvNAlHVzZLaxmUVPMRGPnQADiJGEiti8aU-l1liLQZ3p5Spg/exec", {
     method: "POST",
     body: JSON.stringify(data)
   })
   .then(() => {
+    alert("送信成功");
     document.body.innerHTML = "登録完了";
   })
-  .catch(() => {
-    document.getElementById("status").innerText = "送信エラー";
+  .catch((e) => {
+    alert("エラー：" + e);
+    //document.getElementById("status").innerText = "送信エラー";
   });
 }
 </script>
