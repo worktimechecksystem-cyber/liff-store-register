@@ -57,8 +57,19 @@ function send() {
   alert("データ作成OK");
   fetch("https://script.google.com/macros/s/AKfycbwH6DPF7zrw1mSy8pmI7uZRRh3scCFLEZYOXQCR1CS9J72yoCN9XEkyPMPacKUKUjHunQ/exec", {
     method: "POST",
-    body: JSON.stringify(data)
+    headers: {
+      "Content-Type": "application/json"
+    },
+  body: JSON.stringify(data)
   })
+  .then(res => res.text())
+  .then(text => {
+  alert("成功：" + text);
+  document.body.innerHTML = "登録完了";
+})
+.catch(e => {
+  alert("エラー：" + e);
+});
   .then(() => {
     alert("送信成功");
     document.body.innerHTML = "登録完了";
