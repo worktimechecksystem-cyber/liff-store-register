@@ -54,7 +54,7 @@ function send() {
     storeId: document.getElementById("storeId").value
   };
 
-  fetch("あなたのGAS_URL", {
+  fetch("https://script.google.com/macros/s/AKfycbyuko99R6SIpGe-JbYzNcjR63mR5LJxsC_LFSOfj0d-_tC2dG8ONEPxwkSedGxqAQlA/exec", {
     method: "POST",
     body: JSON.stringify(data)
   })
