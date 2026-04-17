@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>所属店舗登録</h2>
+<p id="status">初期化中...</p>
+
+<input type="hidden" id="userId">
+
+名前<br>
+<input type="text" id="name"><br><br>
+
+店舗<br>
+<select id="storeId">
+  <option value="">選択</option>
+  <option value="A店">A店</option>
+  <option value="B店">B店</option>
+</select><br><br>
+
+<button onclick="send()">登録</button>
+
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+<script>
+let idToken = "";
+
+async function init() {
+  try {
+    await liff.init({ liffId: "あなたのLIFF_ID" });
+
+    if (!liff.isLoggedIn()) {
+      liff.login();
+      return;
+    }
+
+    const profile = await liff.getProfile();
+    document.getElementById("userId").value = profile.userId;
+
+    idToken = liff.getIDToken();
+
+    document.getElementById("status").innerText = "準備OK";
+
+  } catch (e) {
+    document.getElementById("status").innerText = "エラー";
+  }
+}
+
+init();
+
+function send() {
+  const data = {
+    idToken: idToken,
+    name: document.getElementById("name").value,
+    storeId: document.getElementById("storeId").value
+  };
+
+  fetch("あなたのGAS_URL", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    document.body.innerHTML = "登録完了";
+  })
+  .catch(() => {
+    document.getElementById("status").innerText = "送信エラー";
+  });
+}
+</script>
+
+</body>
+</html>
